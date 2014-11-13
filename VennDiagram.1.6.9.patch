@@ -1,0 +1,165 @@
+diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.pairwise.venn.R ./live/R/draw.pairwise.venn.R
+--- /homes/kretzsch/src/VennDiagram/R/draw.pairwise.venn.R	2014-09-24 20:52:16.000000000 +0100
++++ ./live/R/draw.pairwise.venn.R	2014-11-13 18:07:02.896308939 +0000
+@@ -282,6 +282,35 @@ draw.pairwise.venn <- function(
+ 			);
+ 		grob.list <- gList(grob.list, tmp);
+ 
++
++                ## rescaling area labels to be proportional to area
++                if(length(cex.prop) > 0){
++
++                    if(length(cex.prop) != 1) stop("Value passed to cex.prop is not length 1")
++
++                    ## figure out what function to use
++                    func = cex.prop
++                    if(class(cex.prop) != "function"){
++                        if(cex.prop == "lin"){
++                            func = function(x) x
++                        }
++                        else if(cex.prop == "log10"){
++                            func = log10
++                        }
++                        else stop(paste0("Unknown value passed to cex.prop: ", cex.prop))
++                    }
++
++                    ## rescale areas
++                    areas = c(area1 - cross.area, cross.area, area2 - cross.area)
++                    maxArea = max(areas)            
++                    for(i in 1:length(areas)){                
++                        cex[i] = cex[i] * func(areas[i]) / func(maxArea)
++                        if(cex[i] <= 0) stop(paste0("Error in rescaling of area labels: the label of area ",
++                                  i, " is less than or equal to zero"))
++                    }
++                }
++
++                
+ 		# if labels are to be placed outside circles
+ 		if (ext.text) {
+ 			area.1.pos <- x.centre.1 + ifelse(!inverted, -r1 + ( (2 * r1 - (r1 + r2 - d)) / 2), -r2 + ( (2 * r2 - (r2 + r1 - d)) / 2));
+diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.quad.venn.R ./live/R/draw.quad.venn.R
+--- /homes/kretzsch/src/VennDiagram/R/draw.quad.venn.R	2014-08-16 16:55:56.000000000 +0100
++++ ./live/R/draw.quad.venn.R	2014-11-13 18:06:58.884183829 +0000
+@@ -46,6 +46,7 @@ draw.quad.venn <- function(
+ 	rotation.degree = 0,
+ 	rotation.centre = c(0.5, 0.5),
+ 	ind = TRUE,
++        cex.prop=NULL,
+ 	...
+ 	) {
+ 
+@@ -120,7 +121,7 @@ draw.quad.venn <- function(
+ 	a3  <- area4 - a2 - a5 - a6 - a7 - a8 - a10 - a11;
+ 
+ 	# check plausibility and 0 partial areas
+-	areas <- c(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
++	areas <- c(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+ 	areas.error <- c(
+ 		"a1  <- area3 - a2 - a4 - a5 - a6 - a7 - a12 - a13",
+ 		"a2  <- n34 - a6 - a5 - a7",
+@@ -144,6 +145,32 @@ draw.quad.venn <- function(
+ 			}
+ 		}
+ 
++        ## rescaling area labels to be proportional to area
++        if(length(cex.prop) > 0){
++
++            if(length(cex.prop) != 1) stop("Value passed to cex.prop is not length 1")
++
++            ## figure out what function to use
++            func = cex.prop
++            if(class(cex.prop) != "function"){
++                if(cex.prop == "lin"){
++                    func = function(x) x
++                }
++                else if(cex.prop == "log10"){
++                    func = log10
++                }
++                else stop(paste0("Unknown value passed to cex.prop: ", cex.prop))
++            }
++
++            ## rescale areas
++            maxArea = max(areas)            
++            for(i in 1:length(areas)){                
++                cex[i] = cex[i] * func(areas[i]) / func(maxArea)
++                if(cex[i] <= 0) stop(paste0("Error in rescaling of area labels: the label of area ",
++                          i, " is less than or equal to zero"))
++            }
++        }
++
+ 	# initialize gList to hold all Grobs generated
+ 	grob.list <- gList();
+ 
+diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.quintuple.venn.R ./live/R/draw.quintuple.venn.R
+--- /homes/kretzsch/src/VennDiagram/R/draw.quintuple.venn.R	2014-08-16 16:55:56.000000000 +0100
++++ ./live/R/draw.quintuple.venn.R	2014-11-13 18:13:12.681857462 +0000
+@@ -192,6 +192,33 @@ draw.quintuple.venn <- function(
+ 			}
+ 		}
+ 
++        ## rescaling area labels to be proportional to area
++        if(length(cex.prop) > 0){
++
++            if(length(cex.prop) != 1) stop("Value passed to cex.prop is not length 1")
++
++            ## figure out what function to use
++            func = cex.prop
++            if(class(cex.prop) != "function"){
++                if(cex.prop == "lin"){
++                    func = function(x) x
++                }
++                else if(cex.prop == "log10"){
++                    func = log10
++                }
++                else stop(paste0("Unknown value passed to cex.prop: ", cex.prop))
++            }
++
++            ## rescale areas
++            maxArea = max(areas)            
++            for(i in 1:length(areas)){                
++                cex[i] = cex[i] * func(areas[i]) / func(maxArea)
++                if(cex[i] <= 0) stop(paste0("Error in rescaling of area labels: the label of area ",
++                          i, " is less than or equal to zero"))
++            }
++        }
++
++
+ 	# initialize gList to hold all Grobs generated
+ 	grob.list <- gList();
+ 
+diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.triple.venn.R ./live/R/draw.triple.venn.R
+--- /homes/kretzsch/src/VennDiagram/R/draw.triple.venn.R	2014-08-16 16:55:56.000000000 +0100
++++ ./live/R/draw.triple.venn.R	2014-11-13 18:11:28.745609729 +0000
+@@ -435,6 +435,32 @@ draw.triple.venn <- function(
+ 	cell.x[2] <- x.cept.12;
+ 	cell.y[2] <- (y.cept.12.1 + y.sect) / 2;
+ 
++        ## rescaling area labels to be proportional to area
++        if(length(cex.prop) > 0){
++
++            if(length(cex.prop) != 1) stop("Value passed to cex.prop is not length 1")
++
++            ## figure out what function to use
++            func = cex.prop
++            if(class(cex.prop) != "function"){
++                if(cex.prop == "lin"){
++                    func = function(x) x
++                }
++                else if(cex.prop == "log10"){
++                    func = log10
++                }
++                else stop(paste0("Unknown value passed to cex.prop: ", cex.prop))
++            }
++
++            ## rescale areas
++            maxArea = max(areas)            
++            for(i in 1:length(areas)){                
++                cex[i] = cex[i] * func(areas[i]) / func(maxArea)
++                if(cex[i] <= 0) stop(paste0("Error in rescaling of area labels: the label of area ",
++                          i, " is less than or equal to zero"))
++            }
++        }
++        
+ 	# create the text labels
+ 	for (i in 1:7) {
+ 		grob.list <- gList(
