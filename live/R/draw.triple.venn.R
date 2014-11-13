@@ -46,6 +46,7 @@ draw.triple.venn <- function(
 	ind = TRUE,
 	sep.dist = 0.05,
 	offset = 0,
+        cex.prop=NULL,
 	...
 	) {
 

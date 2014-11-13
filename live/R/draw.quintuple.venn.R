@@ -62,6 +62,7 @@ draw.quintuple.venn <- function(
 	rotation.degree = 0,
 	rotation.centre = c(0.5, 0.5),
 	ind = TRUE,
+        cex.prop=NULL,
 	...
 	) {
 

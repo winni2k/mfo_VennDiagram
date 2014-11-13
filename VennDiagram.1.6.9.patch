@@ -1,7 +1,15 @@
 diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.pairwise.venn.R ./live/R/draw.pairwise.venn.R
 --- /homes/kretzsch/src/VennDiagram/R/draw.pairwise.venn.R	2014-09-24 20:52:16.000000000 +0100
-+++ ./live/R/draw.pairwise.venn.R	2014-11-13 18:07:02.896308939 +0000
-@@ -282,6 +282,35 @@ draw.pairwise.venn <- function(
++++ ./live/R/draw.pairwise.venn.R	2014-11-13 18:24:30.317051052 +0000
+@@ -48,6 +48,7 @@ draw.pairwise.venn <- function(
+ 	ind = TRUE,
+ 	sep.dist = 0.05,
+ 	offset = 0,
++        cex.prop=NULL,
+ 	...
+ 	) {
+ 
+@@ -282,6 +283,35 @@ draw.pairwise.venn <- function(
  			);
  		grob.list <- gList(grob.list, tmp);
  
@@ -92,8 +100,16 @@ diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.quad.venn.R ./live/R/draw.quad
  
 diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.quintuple.venn.R ./live/R/draw.quintuple.venn.R
 --- /homes/kretzsch/src/VennDiagram/R/draw.quintuple.venn.R	2014-08-16 16:55:56.000000000 +0100
-+++ ./live/R/draw.quintuple.venn.R	2014-11-13 18:13:12.681857462 +0000
-@@ -192,6 +192,33 @@ draw.quintuple.venn <- function(
++++ ./live/R/draw.quintuple.venn.R	2014-11-13 18:25:35.120078349 +0000
+@@ -62,6 +62,7 @@ draw.quintuple.venn <- function(
+ 	rotation.degree = 0,
+ 	rotation.centre = c(0.5, 0.5),
+ 	ind = TRUE,
++        cex.prop=NULL,
+ 	...
+ 	) {
+ 
+@@ -192,6 +193,33 @@ draw.quintuple.venn <- function(
  			}
  		}
  
@@ -129,8 +145,16 @@ diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.quintuple.venn.R ./live/R/draw
  
 diff -rupN /homes/kretzsch/src/VennDiagram/R/draw.triple.venn.R ./live/R/draw.triple.venn.R
 --- /homes/kretzsch/src/VennDiagram/R/draw.triple.venn.R	2014-08-16 16:55:56.000000000 +0100
-+++ ./live/R/draw.triple.venn.R	2014-11-13 18:11:28.745609729 +0000
-@@ -435,6 +435,32 @@ draw.triple.venn <- function(
++++ ./live/R/draw.triple.venn.R	2014-11-13 18:24:57.326895966 +0000
+@@ -46,6 +46,7 @@ draw.triple.venn <- function(
+ 	ind = TRUE,
+ 	sep.dist = 0.05,
+ 	offset = 0,
++        cex.prop=NULL,
+ 	...
+ 	) {
+ 
+@@ -435,6 +436,32 @@ draw.triple.venn <- function(
  	cell.x[2] <- x.cept.12;
  	cell.y[2] <- (y.cept.12.1 + y.sect) / 2;
  
